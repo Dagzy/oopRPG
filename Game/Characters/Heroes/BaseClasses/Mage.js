@@ -5,6 +5,12 @@ class Mage extends Character{
         super(name)
         this.stats.hp -= 2
         this.stats.mp = 10
+        this.stats.wis += 4
+        this.stats.int += 4
+        this.stats.str -= 2 
+    }
+    dailySpells(){
+        return 2 + this.stats.level
     }
 }
-console.log("Words")
+export default Mage;

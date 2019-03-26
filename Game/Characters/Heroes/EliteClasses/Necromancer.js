@@ -1,9 +1,9 @@
 import Mage from '../BaseClasses/Mage';
 
-class Druid extends Mage{
+class Necromancer extends Mage{
     constructor(name){
         super(name)
     }
 }
 
-export default Druid
+export default Necromancer
