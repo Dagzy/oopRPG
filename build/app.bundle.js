@@ -280,6 +280,10 @@ exports.default = Melee;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Character2 = __webpack_require__(/*! ../../Character */ "./Game/Characters/Character.js");
@@ -305,8 +309,8 @@ var Ranged = function (_Character) {
         _this.stats.hp += 5;
         _this.stats.dex += 4;
         _this.stats.str += 2;
-        _this.stats.wis += 2;
-        _this.stats.con -= 2;
+        _this.stats.con += 2;
+        _this.stats.int -= 2;
         return _this;
     }
 
@@ -329,6 +333,8 @@ var Ranged = function (_Character) {
 
     return Ranged;
 }(_Character3.default);
+
+exports.default = Ranged;
 
 /***/ }),
 
@@ -466,15 +472,37 @@ exports.default = Necromancer;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// import Ranged from '../BaseClasses/Ranged';
 
-// class Ranger extends Ranged{
-//     constructor(name){
-//         super(name)
-//     }
-// }
-// export default Ranger
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Ranged2 = __webpack_require__(/*! ../BaseClasses/Ranged */ "./Game/Characters/Heroes/BaseClasses/Ranged.js");
+
+var _Ranged3 = _interopRequireDefault(_Ranged2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Ranger = function (_Ranged) {
+    _inherits(Ranger, _Ranged);
+
+    function Ranger(name) {
+        _classCallCheck(this, Ranger);
+
+        return _possibleConstructorReturn(this, (Ranger.__proto__ || Object.getPrototypeOf(Ranger)).call(this, name));
+    }
+
+    return Ranger;
+}(_Ranged3.default);
+
+exports.default = Ranger;
 
 /***/ }),
 

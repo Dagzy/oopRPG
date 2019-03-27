@@ -6,8 +6,8 @@ class Ranged extends Character{
         this.stats.hp += 5
         this.stats.dex += 4
         this.stats.str += 2
-        this.stats.wis += 2
-        this.stats.con -= 2
+        this.stats.con += 2
+        this.stats.int -= 2 
     }
     focus(){
         return {
@@ -21,3 +21,4 @@ class Ranged extends Character{
         }
     }
 }
+export default Ranged;
