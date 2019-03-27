@@ -738,9 +738,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Party = __webpack_require__(/*! ./Party */ "./Game/Party.js");
+var _Heroes = __webpack_require__(/*! ./Characters/Heroes/Heroes */ "./Game/Characters/Heroes/Heroes.js");
 
-var _Party2 = _interopRequireDefault(_Party);
+var _Heroes2 = _interopRequireDefault(_Heroes);
 
 var _Items = __webpack_require__(/*! ./Items/Items */ "./Game/Items/Items.js");
 
@@ -753,7 +753,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Game = function Game() {
     _classCallCheck(this, Game);
 
-    this.party = _Party2.default, this.items = _Items2.default;
+    this.heroes = _Heroes2.default, this.items = _Items2.default;
 };
 
 exports.default = Game;
@@ -1038,10 +1038,10 @@ exports.default = Weapons;
 
 /***/ }),
 
-/***/ "./Game/Party.js":
-/*!***********************!*\
-  !*** ./Game/Party.js ***!
-  \***********************/
+/***/ "./Game/helpers/buildList.js":
+/*!***********************************!*\
+  !*** ./Game/helpers/buildList.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1049,22 +1049,75 @@ exports.default = Weapons;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
-var _Heroes = __webpack_require__(/*! ./Characters/Heroes/Heroes */ "./Game/Characters/Heroes/Heroes.js");
+var _showAbilities = __webpack_require__(/*! ./showAbilities */ "./Game/helpers/showAbilities.js");
 
-var _Heroes2 = _interopRequireDefault(_Heroes);
+var _showAbilities2 = _interopRequireDefault(_showAbilities);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Dagzy = new _Heroes2.default[0]("Dagzy");
+function buildList(arr, t) {
+    console.log(t);
+    var target = document.getElementById(t);
+    var list = document.createElement("ul");
+    target.appendChild(list);
+    for (var i = 0; i < arr.length; i++) {
+        var item = document.createElement("li");
+        item.innerText = arr[i].name;
+        item.id = arr[i].name;
+        item.addEventListener('click', _showAbilities2.default);
+        list.appendChild(item);
+    }
+}
 
-console.log(Dagzy);
-console.log(Dagzy.dailySpells());
+exports.default = buildList;
 
-var Party = [Dagzy];
-exports.default = Party;
+/***/ }),
+
+/***/ "./Game/helpers/buildParty.js":
+/*!************************************!*\
+  !*** ./Game/helpers/buildParty.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var buildParty = {
+    party: [],
+    addPlayer: function addPlayer(p) {
+        this.party.push(p);
+    }
+};
+
+exports.default = buildParty;
+
+/***/ }),
+
+/***/ "./Game/helpers/showAbilities.js":
+/*!***************************************!*\
+  !*** ./Game/helpers/showAbilities.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function showAbilities(player) {
+    console.log(player.target.id);
+    // let div = document.getElementById("abilities")
+}
+exports.default = showAbilities;
 
 /***/ }),
 
@@ -1082,21 +1135,27 @@ var _Game = __webpack_require__(/*! ./Game/Game */ "./Game/Game.js");
 
 var _Game2 = _interopRequireDefault(_Game);
 
+var _buildList = __webpack_require__(/*! ./Game/helpers/buildList */ "./Game/helpers/buildList.js");
+
+var _buildList2 = _interopRequireDefault(_buildList);
+
+var _buildParty = __webpack_require__(/*! ./Game/helpers/buildParty */ "./Game/helpers/buildParty.js");
+
+var _buildParty2 = _interopRequireDefault(_buildParty);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var game = new _Game2.default();
-// console.log(Timmy)
+var helpers = {
+    buildList: _buildList2.default,
+    buildParty: _buildParty2.default
+};
+
 function startGame() {
-    console.log(game.party);
-    var list = document.createElement("ul");
-    document.body.appendChild(list);
-    for (var i = 0; i < game.party.length; i++) {
-        var item = document.createElement("li");
-        item.innerText = game.party[i].name;
-        list.appendChild(item);
-    }
+    helpers.buildList(game.heroes, "newplayer");
 }
 module.exports = {
+    helpers: helpers,
     startGame: startGame
 };
 

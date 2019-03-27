@@ -1,9 +1,9 @@
-import Party from './Party'
+import Heroes from './Characters/Heroes/Heroes'
 import Items from './Items/Items'
 
 class Game {
     constructor(){
-        this.party = Party,
+        this.heroes = Heroes,
         this.items = Items
     }
 }
