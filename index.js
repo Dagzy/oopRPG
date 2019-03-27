@@ -1,18 +1,17 @@
-import Party from './Game/Characters/Heroes/Heroes';
-const Partay = Party()
-// const Timmy = new Partay[0]("Timmy");
+import Game from './Game/Game'
 
+const game = new Game()
 // console.log(Timmy)
 function startGame(){
+    console.log(game.party)
     let list = document.createElement("ul");
     document.body.appendChild(list)
-    for (let i = 0; i < Partay.length; i++) {
+    for (let i = 0; i < game.party.length; i++) {
         let item = document.createElement("li");
-        item.innerText = Partay[i].name
+        item.innerText = game.party[i].name
         list.appendChild(item)
     }
 }
 module.exports = {
-    startGame: startGame,
-    party: Partay
+    startGame: startGame
 }

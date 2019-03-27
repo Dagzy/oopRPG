@@ -121,6 +121,7 @@ var Character = function () {
             con: 8,
             level: 0
         };
+        this.items = [];
     }
 
     _createClass(Character, [{
@@ -132,6 +133,38 @@ var Character = function () {
         key: "levelUp",
         value: function levelUp() {
             ++this.stats.level;
+        }
+    }, {
+        key: "attack",
+        value: function attack(w) {
+            if (w) {
+                return w.damage + Math.floor(this.stats.str / 4);
+            } else {
+                return Math.floor(this.stats.str / 4);
+            }
+        }
+    }, {
+        key: "defend",
+        value: function defend(a) {
+            if (a) {
+                return a.defense + this.stats.con / 4;
+            } else {
+                return this.stats.con / 4;
+            }
+        }
+    }, {
+        key: "hitOrMiss",
+        value: function hitOrMiss(t) {
+            var mod1 = Math.floor(Math.random() * 3);
+            var mod2 = Math.floor(Math.random() * 3);
+            var acc = this.stats.acc ? this.stats.acc + this.stats.dex : this.stats.dex;
+            var eva = t.stats.eva ? this.stats.eva + this.stats.dex : this.stats.dex;
+            var hit = acc + mod1 - (eva + mod2);
+            if (hit > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }]);
 
@@ -178,8 +211,7 @@ var Mage = function (_Character) {
 
         var _this = _possibleConstructorReturn(this, (Mage.__proto__ || Object.getPrototypeOf(Mage)).call(this, name));
 
-        _this.stats.hp -= 2;
-        _this.stats.mp = 10;
+        _this.stats.mp = 20;
         _this.stats.wis += 4;
         _this.stats.int += 4;
         _this.stats.str -= 2;
@@ -599,6 +631,48 @@ exports.default = Warrior;
 
 /***/ }),
 
+/***/ "./Game/Characters/Heroes/EpicClasses/WhiteWizard.js":
+/*!***********************************************************!*\
+  !*** ./Game/Characters/Heroes/EpicClasses/WhiteWizard.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Cleric2 = __webpack_require__(/*! ../EliteClasses/Cleric */ "./Game/Characters/Heroes/EliteClasses/Cleric.js");
+
+var _Cleric3 = _interopRequireDefault(_Cleric2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var WhiteWizard = function (_Cleric) {
+    _inherits(WhiteWizard, _Cleric);
+
+    function WhiteWizard(n) {
+        _classCallCheck(this, WhiteWizard);
+
+        return _possibleConstructorReturn(this, (WhiteWizard.__proto__ || Object.getPrototypeOf(WhiteWizard)).call(this, n));
+    }
+
+    return WhiteWizard;
+}(_Cleric3.default);
+
+exports.default = WhiteWizard;
+
+/***/ }),
+
 /***/ "./Game/Characters/Heroes/Heroes.js":
 /*!******************************************!*\
   !*** ./Game/Characters/Heroes/Heroes.js ***!
@@ -610,8 +684,9 @@ exports.default = Warrior;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+        value: true
 });
+exports.Epic = undefined;
 
 var _Cleric = __webpack_require__(/*! ./EliteClasses/Cleric */ "./Game/Characters/Heroes/EliteClasses/Cleric.js");
 
@@ -637,20 +712,358 @@ var _Warrior = __webpack_require__(/*! ./EliteClasses/Warrior */ "./Game/Charact
 
 var _Warrior2 = _interopRequireDefault(_Warrior);
 
+var _WhiteWizard = __webpack_require__(/*! ./EpicClasses/WhiteWizard */ "./Game/Characters/Heroes/EpicClasses/WhiteWizard.js");
+
+var _WhiteWizard2 = _interopRequireDefault(_WhiteWizard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const Tommy = new Warrior("Tommy");
-// const Timmy = new Cleric("Timmy");
+var Heroes = [_Cleric2.default, _Druid2.default, _Necromancer2.default, _Ranger2.default, _Rogue2.default, _Warrior2.default];
+exports.default = Heroes;
+var Epic = exports.Epic = [_WhiteWizard2.default];
 
-// let warcry = Tommy.warcry()
-// console.log(Tommy.stats)
-// warcry.boost()
-// console.log(Tommy.stats)
+/***/ }),
+
+/***/ "./Game/Game.js":
+/*!**********************!*\
+  !*** ./Game/Game.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
-function Party() {
-    return [_Cleric2.default, _Druid2.default, _Necromancer2.default, _Ranger2.default, _Rogue2.default, _Warrior2.default];
-}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Party = __webpack_require__(/*! ./Party */ "./Game/Party.js");
+
+var _Party2 = _interopRequireDefault(_Party);
+
+var _Items = __webpack_require__(/*! ./Items/Items */ "./Game/Items/Items.js");
+
+var _Items2 = _interopRequireDefault(_Items);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Game = function Game() {
+    _classCallCheck(this, Game);
+
+    this.party = _Party2.default, this.items = _Items2.default;
+};
+
+exports.default = Game;
+
+/***/ }),
+
+/***/ "./Game/Items/Defensive/Armor.js":
+/*!***************************************!*\
+  !*** ./Game/Items/Defensive/Armor.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Armor = function Armor(name, type) {
+    _classCallCheck(this, Armor);
+
+    this.name = name, this.type = type, this.defense = 1;
+};
+
+exports.default = Armor;
+
+/***/ }),
+
+/***/ "./Game/Items/Defensive/Armors.js":
+/*!****************************************!*\
+  !*** ./Game/Items/Defensive/Armors.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ClothArmors = __webpack_require__(/*! ./ClothArmors/ClothArmors */ "./Game/Items/Defensive/ClothArmors/ClothArmors.js");
+
+var _ClothArmors2 = _interopRequireDefault(_ClothArmors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Armors = [_ClothArmors2.default];
+
+exports.default = Armors;
+
+/***/ }),
+
+/***/ "./Game/Items/Defensive/ClothArmors/ClothArmor.js":
+/*!********************************************************!*\
+  !*** ./Game/Items/Defensive/ClothArmors/ClothArmor.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Armor2 = __webpack_require__(/*! ../Armor */ "./Game/Items/Defensive/Armor.js");
+
+var _Armor3 = _interopRequireDefault(_Armor2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClothArmor = function (_Armor) {
+    _inherits(ClothArmor, _Armor);
+
+    function ClothArmor(name, type) {
+        _classCallCheck(this, ClothArmor);
+
+        var _this = _possibleConstructorReturn(this, (ClothArmor.__proto__ || Object.getPrototypeOf(ClothArmor)).call(this, name, type));
+
+        _this.defense = 3;
+        return _this;
+    }
+
+    return ClothArmor;
+}(_Armor3.default);
+
+exports.default = ClothArmor;
+
+/***/ }),
+
+/***/ "./Game/Items/Defensive/ClothArmors/ClothArmors.js":
+/*!*********************************************************!*\
+  !*** ./Game/Items/Defensive/ClothArmors/ClothArmors.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ClothArmor = __webpack_require__(/*! ./ClothArmor */ "./Game/Items/Defensive/ClothArmors/ClothArmor.js");
+
+var _ClothArmor2 = _interopRequireDefault(_ClothArmor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ClothArmors = [_ClothArmor2.default];
+
+exports.default = ClothArmors;
+
+/***/ }),
+
+/***/ "./Game/Items/Items.js":
+/*!*****************************!*\
+  !*** ./Game/Items/Items.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Weapons = __webpack_require__(/*! ./Offensive/Weapons */ "./Game/Items/Offensive/Weapons.js");
+
+var _Weapons2 = _interopRequireDefault(_Weapons);
+
+var _Armors = __webpack_require__(/*! ./Defensive/Armors */ "./Game/Items/Defensive/Armors.js");
+
+var _Armors2 = _interopRequireDefault(_Armors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Items = [_Weapons2.default, _Armors2.default];
+
+exports.default = Items;
+
+/***/ }),
+
+/***/ "./Game/Items/Offensive/Swords/Sword.js":
+/*!**********************************************!*\
+  !*** ./Game/Items/Offensive/Swords/Sword.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Weapon2 = __webpack_require__(/*! ../Weapon */ "./Game/Items/Offensive/Weapon.js");
+
+var _Weapon3 = _interopRequireDefault(_Weapon2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Sword = function (_Weapon) {
+    _inherits(Sword, _Weapon);
+
+    function Sword(n) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "slashing";
+
+        _classCallCheck(this, Sword);
+
+        var _this = _possibleConstructorReturn(this, (Sword.__proto__ || Object.getPrototypeOf(Sword)).call(this, n, t));
+
+        console.log(_this);
+        return _this;
+    }
+
+    return Sword;
+}(_Weapon3.default);
+
+exports.default = Sword;
+
+/***/ }),
+
+/***/ "./Game/Items/Offensive/Swords/Swords.js":
+/*!***********************************************!*\
+  !*** ./Game/Items/Offensive/Swords/Swords.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Sword = __webpack_require__(/*! ./Sword */ "./Game/Items/Offensive/Swords/Sword.js");
+
+var _Sword2 = _interopRequireDefault(_Sword);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Swords = [_Sword2.default];
+
+exports.default = Swords;
+
+/***/ }),
+
+/***/ "./Game/Items/Offensive/Weapon.js":
+/*!****************************************!*\
+  !*** ./Game/Items/Offensive/Weapon.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Weapon = function Weapon(name, type) {
+    _classCallCheck(this, Weapon);
+
+    this.name = name, this.type = type, this.dmg = 1;
+};
+
+exports.default = Weapon;
+
+/***/ }),
+
+/***/ "./Game/Items/Offensive/Weapons.js":
+/*!*****************************************!*\
+  !*** ./Game/Items/Offensive/Weapons.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Swords = __webpack_require__(/*! ./Swords/Swords */ "./Game/Items/Offensive/Swords/Swords.js");
+
+var _Swords2 = _interopRequireDefault(_Swords);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Weapons = [_Swords2.default];
+
+exports.default = Weapons;
+
+/***/ }),
+
+/***/ "./Game/Party.js":
+/*!***********************!*\
+  !*** ./Game/Party.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Heroes = __webpack_require__(/*! ./Characters/Heroes/Heroes */ "./Game/Characters/Heroes/Heroes.js");
+
+var _Heroes2 = _interopRequireDefault(_Heroes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Dagzy = new _Heroes2.default[0]("Dagzy");
+
+console.log(Dagzy);
+console.log(Dagzy.dailySpells());
+
+var Party = [Dagzy];
 exports.default = Party;
 
 /***/ }),
@@ -665,28 +1078,26 @@ exports.default = Party;
 "use strict";
 
 
-var _Heroes = __webpack_require__(/*! ./Game/Characters/Heroes/Heroes */ "./Game/Characters/Heroes/Heroes.js");
+var _Game = __webpack_require__(/*! ./Game/Game */ "./Game/Game.js");
 
-var _Heroes2 = _interopRequireDefault(_Heroes);
+var _Game2 = _interopRequireDefault(_Game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Partay = (0, _Heroes2.default)();
-// const Timmy = new Partay[0]("Timmy");
-
+var game = new _Game2.default();
 // console.log(Timmy)
 function startGame() {
+    console.log(game.party);
     var list = document.createElement("ul");
     document.body.appendChild(list);
-    for (var i = 0; i < Partay.length; i++) {
+    for (var i = 0; i < game.party.length; i++) {
         var item = document.createElement("li");
-        item.innerText = Partay[i].name;
+        item.innerText = game.party[i].name;
         list.appendChild(item);
     }
 }
 module.exports = {
-    startGame: startGame,
-    party: Partay
+    startGame: startGame
 };
 
 /***/ })

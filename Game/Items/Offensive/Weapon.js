@@ -1,8 +1,8 @@
-class Armor{
+class Weapon {
     constructor(name, type){
         this.name = name,
         this.type = type,
-        this.defense = 1
+        this.dmg = 1;
     }
 }
-export default Armor
+export default Weapon
