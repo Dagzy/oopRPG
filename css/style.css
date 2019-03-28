@@ -1,6 +1,45 @@
  body{
-     background: red;
+     background: url("../assets/bg.jpg");
+     background-repeat: no-repeat;
+     background-size: auto;
  }
  ul{
      list-style-type: none;
  }
+ #intro{
+    position: absolute;
+    z-index: 1;
+    background: url("../assets/party.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    text-align: center;
+    height: 50vh;
+    width: 50vw;
+    margin: 10% 10% 10% 25%;
+    border: #1a522b solid 10px;
+}
+#mtop{
+    margin-top: 10%;
+}
+.hide{
+    display: none;
+}
+.btn{
+    background-color: #ffffff;
+    border: #1a522b solid 2px;
+}
+.col-3{
+    text-align: center;
+}
+#newplayer{
+    margin-top: 10%;
+}
+#add{
+    height: 10%;
+    width: 80%;
+    margin-left: 10%;
+}
+#mtop{
+    margin-top: 20%;
+}

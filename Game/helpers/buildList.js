@@ -5,11 +5,14 @@ function buildList(arr, t){
     let list = document.createElement("ul");
     target.appendChild(list)
     for (let i = 0; i < arr.length; i++) {
-        let item = document.createElement("li");
-        item.innerText = arr[i].name
-        item.id = arr[i].name
-        item.addEventListener('click', showAbilities)
-        list.appendChild(item)
+        let li = document.createElement("li")
+        let button = document.createElement("button");
+        button.className = "btn btn-warning"
+        button.innerText = arr[i].name
+        button.id = arr[i].name
+        button.addEventListener('click', showAbilities)
+        li.appendChild(button)
+        list.appendChild(li)
     }
 }
 

@@ -111,15 +111,18 @@ var Character = function () {
 
         this.name = name;
         this.stats = {
-            hp: 10,
-            mp: 0,
+            maxHP: 10,
+            currentHP: 10,
+            maxMP: 0,
+            currentMP: 0,
             str: 8,
             wis: 8,
             int: 8,
             chr: 8,
             dex: 8,
             con: 8,
-            level: 0
+            level: 0,
+            xp: 0
         };
         this.items = [];
     }
@@ -388,6 +391,10 @@ var _Mage2 = __webpack_require__(/*! ../BaseClasses/Mage */ "./Game/Characters/H
 
 var _Mage3 = _interopRequireDefault(_Mage2);
 
+var _WhiteSpells = __webpack_require__(/*! ../../../Magic/WhiteMagic/WhiteSpells */ "./Game/Magic/WhiteMagic/WhiteSpells.js");
+
+var _WhiteSpells2 = _interopRequireDefault(_WhiteSpells);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -402,7 +409,10 @@ var Cleric = function (_Mage) {
     function Cleric(name) {
         _classCallCheck(this, Cleric);
 
-        return _possibleConstructorReturn(this, (Cleric.__proto__ || Object.getPrototypeOf(Cleric)).call(this, name));
+        var _this = _possibleConstructorReturn(this, (Cleric.__proto__ || Object.getPrototypeOf(Cleric)).call(this, name));
+
+        _this.cure = _WhiteSpells2.default.Cure;
+        return _this;
     }
 
     return Cleric;
@@ -1038,6 +1048,111 @@ exports.default = Weapons;
 
 /***/ }),
 
+/***/ "./Game/Magic/Spell.js":
+/*!*****************************!*\
+  !*** ./Game/Magic/Spell.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Spell = function Spell(name, type) {
+    _classCallCheck(this, Spell);
+
+    this.name = name, this.type = type, this.cost = 0;
+};
+
+exports.default = Spell;
+
+/***/ }),
+
+/***/ "./Game/Magic/WhiteMagic/Cure.js":
+/*!***************************************!*\
+  !*** ./Game/Magic/WhiteMagic/Cure.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Spell2 = __webpack_require__(/*! ../Spell */ "./Game/Magic/Spell.js");
+
+var _Spell3 = _interopRequireDefault(_Spell2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Cure = function (_Spell) {
+    _inherits(Cure, _Spell);
+
+    function Cure(target) {
+        _classCallCheck(this, Cure);
+
+        var _this = _possibleConstructorReturn(this, (Cure.__proto__ || Object.getPrototypeOf(Cure)).call(this, "Cure", "Healing"));
+
+        _this.cost = 2;
+        var max = target.stats.maxHP;
+        var current = target.stats.currentHP;
+        var damage = max - current;
+        if (damage > 4) {
+            target.stats.currentHP += 5;
+        } else {
+            target.stats.currentHP = max;
+        }
+        return _this;
+    }
+
+    return Cure;
+}(_Spell3.default);
+
+exports.default = Cure;
+
+/***/ }),
+
+/***/ "./Game/Magic/WhiteMagic/WhiteSpells.js":
+/*!**********************************************!*\
+  !*** ./Game/Magic/WhiteMagic/WhiteSpells.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Cure = __webpack_require__(/*! ./Cure */ "./Game/Magic/WhiteMagic/Cure.js");
+
+var _Cure2 = _interopRequireDefault(_Cure);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var spells = { Cure: _Cure2.default };
+
+exports.default = spells;
+
+/***/ }),
+
 /***/ "./Game/helpers/buildList.js":
 /*!***********************************!*\
   !*** ./Game/helpers/buildList.js ***!
@@ -1064,11 +1179,14 @@ function buildList(arr, t) {
     var list = document.createElement("ul");
     target.appendChild(list);
     for (var i = 0; i < arr.length; i++) {
-        var item = document.createElement("li");
-        item.innerText = arr[i].name;
-        item.id = arr[i].name;
-        item.addEventListener('click', _showAbilities2.default);
-        list.appendChild(item);
+        var li = document.createElement("li");
+        var button = document.createElement("button");
+        button.className = "btn btn-warning";
+        button.innerText = arr[i].name;
+        button.id = arr[i].name;
+        button.addEventListener('click', _showAbilities2.default);
+        li.appendChild(button);
+        list.appendChild(li);
     }
 }
 
@@ -1113,9 +1231,25 @@ exports.default = buildParty;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _Heroes = __webpack_require__(/*! ../Characters/Heroes/Heroes */ "./Game/Characters/Heroes/Heroes.js");
+
+var _Heroes2 = _interopRequireDefault(_Heroes);
+
+var _buildList = __webpack_require__(/*! ./buildList */ "./Game/helpers/buildList.js");
+
+var _buildList2 = _interopRequireDefault(_buildList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function showAbilities(player) {
-    console.log(player.target.id);
-    // let div = document.getElementById("abilities")
+    var abilities = document.getElementById("abilities");
+    for (var i = 0; i < _Heroes2.default.length; i++) {
+        if (_Heroes2.default[i].name === player.target.id) {
+            var newPlayer = new _Heroes2.default[i]("newPlayer");
+            console.log(newPlayer);
+        }
+    }
 }
 exports.default = showAbilities;
 
@@ -1148,11 +1282,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var game = new _Game2.default();
 var helpers = {
     buildList: _buildList2.default,
-    buildParty: _buildParty2.default
+    buildParty: _buildParty2.default,
+    addPlayer: addPlayer
 };
-
 function startGame() {
     helpers.buildList(game.heroes, "newplayer");
+}
+
+function addPlayer(e) {
+    e.preventDefault();
+    var localStorage = window.localStorage.getItem("party");
+    var intro = document.getElementById("intro");
+    var name = document.getElementById("name").value;
+    if (intro.className === "hide") {
+        intro.className = "";
+    } else {
+        intro.className = "hide";
+    }
+    if (localStorage) {
+        var storage = JSON.parse(localStorage);
+        console.log(storage);
+    } else {
+        var obj = { name: name };
+        var s = JSON.stringify(obj);
+        window.localStorage.setItem("party", s);
+    }
 }
 module.exports = {
     helpers: helpers,

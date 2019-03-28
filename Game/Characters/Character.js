@@ -2,15 +2,18 @@ class Character{
     constructor(name){
         this.name = name;
         this.stats = { 
-            hp : 10,
-            mp : 0,
+            maxHP: 10,
+            currentHP : 10,
+            maxMP : 0,
+            currentMP: 0,
             str: 8,
             wis: 8,
             int: 8,
             chr: 8,
             dex: 8,
             con: 8,
-            level: 0
+            level: 0,
+            xp: 0
         };
         this.items = [];
     }
