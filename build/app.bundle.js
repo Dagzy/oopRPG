@@ -1294,8 +1294,9 @@ function addPlayer(e) {
     var localStorage = window.localStorage.getItem("party");
     var intro = document.getElementById("intro");
     var name = document.getElementById("name").value;
+    var obj = {};
     if (intro.className === "hide") {
-        intro.className = "";
+        intro.className = "row";
     } else {
         intro.className = "hide";
     }
@@ -1303,8 +1304,8 @@ function addPlayer(e) {
         var storage = JSON.parse(localStorage);
         console.log(storage);
     } else {
-        var obj = { name: name };
-        var s = JSON.stringify(obj);
+        var _obj = { name: name };
+        var s = JSON.stringify(_obj);
         window.localStorage.setItem("party", s);
     }
 }

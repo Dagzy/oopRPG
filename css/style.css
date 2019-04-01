@@ -12,12 +12,11 @@
     background: url("../assets/party.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    color: #ffffff;
     text-align: center;
-    height: 50vh;
-    width: 50vw;
+    width: 33vw;
     margin: 10% 10% 10% 25%;
     border: #1a522b solid 10px;
+    text-align: center;
 }
 #mtop{
     margin-top: 10%;

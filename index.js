@@ -19,7 +19,7 @@ function addPlayer(e){
     let name = document.getElementById("name").value
     let obj = {}
     if(intro.className === "hide"){
-        intro.className = ""
+        intro.className = "row"
     }else{  
         intro.className = "hide"
     }
