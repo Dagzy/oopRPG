@@ -7,4 +7,6 @@ const port = 9001;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors())
-app.listen(port, ()=>{console.log(`Listening on port ${port}`)})
+app.use('/', function(req, res){
+    console.log(req.body)
+})

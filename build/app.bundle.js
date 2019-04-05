@@ -1153,6 +1153,43 @@ exports.default = spells;
 
 /***/ }),
 
+/***/ "./Game/helpers/addPlayer.js":
+/*!***********************************!*\
+  !*** ./Game/helpers/addPlayer.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function addPlayer(e) {
+    e.preventDefault();
+    var localStorage = window.localStorage.getItem("party");
+    var intro = document.getElementById("intro");
+    var name = document.getElementById("name").value;
+    var obj = {};
+    if (intro.className === "hide") {
+        intro.className = "row";
+    } else {
+        intro.className = "hide";
+    }
+    if (localStorage) {
+        var storage = JSON.parse(localStorage);
+        console.log(storage);
+    } else {
+        var _obj = { name: name };
+        var s = JSON.stringify(_obj);
+        window.localStorage.setItem("party", s);
+    }
+}
+exports.default = addPlayer;
+
+/***/ }),
+
 /***/ "./Game/helpers/buildList.js":
 /*!***********************************!*\
   !*** ./Game/helpers/buildList.js ***!
@@ -1277,38 +1314,22 @@ var _buildParty = __webpack_require__(/*! ./Game/helpers/buildParty */ "./Game/h
 
 var _buildParty2 = _interopRequireDefault(_buildParty);
 
+var _addPlayer = __webpack_require__(/*! ./Game/helpers/addPlayer */ "./Game/helpers/addPlayer.js");
+
+var _addPlayer2 = _interopRequireDefault(_addPlayer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var game = new _Game2.default();
 var helpers = {
     buildList: _buildList2.default,
     buildParty: _buildParty2.default,
-    addPlayer: addPlayer
+    addPlayer: _addPlayer2.default
 };
 function startGame() {
     helpers.buildList(game.heroes, "newplayer");
 }
 
-function addPlayer(e) {
-    e.preventDefault();
-    var localStorage = window.localStorage.getItem("party");
-    var intro = document.getElementById("intro");
-    var name = document.getElementById("name").value;
-    var obj = {};
-    if (intro.className === "hide") {
-        intro.className = "row";
-    } else {
-        intro.className = "hide";
-    }
-    if (localStorage) {
-        var storage = JSON.parse(localStorage);
-        console.log(storage);
-    } else {
-        var _obj = { name: name };
-        var s = JSON.stringify(_obj);
-        window.localStorage.setItem("party", s);
-    }
-}
 module.exports = {
     helpers: helpers,
     startGame: startGame
