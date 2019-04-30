@@ -53,3 +53,11 @@ class Character{
     }
 }
 export default Character
+
+
+
+let myArr = [1, 2, 3]
+
+for (let i = 0; i < myArr.length; i++) {
+    console.log(myArr[i])    
+};

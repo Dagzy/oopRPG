@@ -4,11 +4,6 @@ function addPlayer(e){
     let intro = document.getElementById("intro")
     let name = document.getElementById("name").value
     let obj = {}
-    if(intro.className === "hide"){
-        intro.className = "row"
-    }else{  
-        intro.className = "hide"
-    }
     if(localStorage){
         let storage = JSON.parse(localStorage)
         console.log(storage)

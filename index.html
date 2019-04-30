@@ -10,7 +10,7 @@
 </head>
 <body class="container-fluid">
     <div class="row">
-        <form id="intro" class="hide">
+        <form id="partyModalDiv" class="hide">
             <div id="mtop" class="col-6">
                 <input type="text" name="name" id="name" placeholder="Name:">
             </div>
@@ -22,10 +22,12 @@
     </div>
     <div class="row">
         <div class="col-3" id="party"></div>
+
         <div class="col-3" id="abilities">
 
-            <button onclick="PlayGame.helpers.addPlayer(event)"class="btn">Add Player</button>
+            <button id="partyModal" onclick="PlayGame.helpers.showModal(event)"class="btn">Add Player</button>
         </div>
+
         <div class="col-3" id="enemies"></div>
     </div>
     

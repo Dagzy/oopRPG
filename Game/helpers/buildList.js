@@ -1,6 +1,5 @@
 import showAbilities from './showAbilities'
 function buildList(arr, t){
-    console.log(t)
     let target = document.getElementById(t)
     let list = document.createElement("ul");
     target.appendChild(list)

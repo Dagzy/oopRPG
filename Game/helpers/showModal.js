@@ -1,21 +1,22 @@
 function showModal(e){
-    let target = e.target;
+    let tempTarget = e.target.id;
+    let target = tempTarget + "Div"
     let localStorage = window.localStorage.getItem("party")
-    let intro = document.getElementById("intro")
-    let name = document.getElementById("name").value
+    let modal = document.getElementById(target)
     let obj = {}
-    if(intro.className === "hide"){
-        intro.className = "row"
+    console.log(modal)
+    if(modal.className === "hide"){
+        modal.className = "row"
     }else{  
-        intro.className = "hide"
+        modal.className = "hide"
     }
-    if(localStorage){
-        let storage = JSON.parse(localStorage)
-        console.log(storage)
-    }else{
-        let obj = {name}
-        let s = JSON.stringify(obj)
-        window.localStorage.setItem("party", s)
-    }
+    // if(localStorage){
+    //     let storage = JSON.parse(localStorage)
+    //     console.log(storage)
+    // }else{
+    //     let obj = {name}
+    //     let s = JSON.stringify(obj)
+    //     window.localStorage.setItem("party", s)
+    // }
 }
 export default showModal;

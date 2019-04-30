@@ -6,7 +6,7 @@
  ul{
      list-style-type: none;
  }
- #intro{
+ #partyModalDiv{
     position: absolute;
     z-index: 1;
     background: url("../assets/party.jpg");
@@ -41,4 +41,10 @@
 }
 #mtop{
     margin-top: 20%;
+}
+
+
+h1{
+    font-family: Trattatello;
+    color:blue;
 }

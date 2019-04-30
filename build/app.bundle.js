@@ -1172,11 +1172,6 @@ function addPlayer(e) {
     var intro = document.getElementById("intro");
     var name = document.getElementById("name").value;
     var obj = {};
-    if (intro.className === "hide") {
-        intro.className = "row";
-    } else {
-        intro.className = "hide";
-    }
     if (localStorage) {
         var storage = JSON.parse(localStorage);
         console.log(storage);
@@ -1211,7 +1206,6 @@ var _showAbilities2 = _interopRequireDefault(_showAbilities);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function buildList(arr, t) {
-    console.log(t);
     var target = document.getElementById(t);
     var list = document.createElement("ul");
     target.appendChild(list);
@@ -1292,6 +1286,44 @@ exports.default = showAbilities;
 
 /***/ }),
 
+/***/ "./Game/helpers/showModal.js":
+/*!***********************************!*\
+  !*** ./Game/helpers/showModal.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function showModal(e) {
+    var tempTarget = e.target.id;
+    var target = tempTarget + "Div";
+    var localStorage = window.localStorage.getItem("party");
+    var modal = document.getElementById(target);
+    var obj = {};
+    console.log(modal);
+    if (modal.className === "hide") {
+        modal.className = "row";
+    } else {
+        modal.className = "hide";
+    }
+    // if(localStorage){
+    //     let storage = JSON.parse(localStorage)
+    //     console.log(storage)
+    // }else{
+    //     let obj = {name}
+    //     let s = JSON.stringify(obj)
+    //     window.localStorage.setItem("party", s)
+    // }
+}
+exports.default = showModal;
+
+/***/ }),
+
 /***/ "./index.js":
 /*!******************!*\
   !*** ./index.js ***!
@@ -1318,13 +1350,18 @@ var _addPlayer = __webpack_require__(/*! ./Game/helpers/addPlayer */ "./Game/hel
 
 var _addPlayer2 = _interopRequireDefault(_addPlayer);
 
+var _showModal = __webpack_require__(/*! ./Game/helpers/showModal */ "./Game/helpers/showModal.js");
+
+var _showModal2 = _interopRequireDefault(_showModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var game = new _Game2.default();
 var helpers = {
     buildList: _buildList2.default,
     buildParty: _buildParty2.default,
-    addPlayer: _addPlayer2.default
+    addPlayer: _addPlayer2.default,
+    showModal: _showModal2.default
 };
 function startGame() {
     helpers.buildList(game.heroes, "newplayer");
